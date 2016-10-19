@@ -15,7 +15,7 @@ if(!isset($file)) {
 }
 echo json_encode(array(
     'code' => 0,
-    'msg'  => '',
+    'msg'  => 'success',
     'obj'  => array(
         'url'=>'',
         'image_id'=>12345
