@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>图片裁剪并上传</title>
+<meta name="format-detection" content="telephone=no"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<link href="jscrop/image.upload.min.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+<div class="tx_r">
+    <input id="uploadImages" class="default" type="file">
+    <div class="tx_r_img" ><img id="avatar_img"></div>
+</div>
+
+<script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+<script src="jscrop/jquery.ui.min.js"></script>
+<script src="jscrop/image.upload.js"></script>
+<script>
+
+$(function () {
+    
+    /* 裁剪、压缩、上传 图片 */
+    $("#uploadImages").coreImageUpload ({
+        /* 是否开启图片裁切,默认true */
+        enableCrop: true, 
+        /* 图片裁切比例，默认1:1 */
+        cropRatio: '300:300', 
+        /* 异步上传地址 */
+        url: "upload.php",
+        /* 异步上传接受base64图片的参数,必填 */
+        imgField: 'imgbase64',
+        /* 异步上传裁切后的图片时附加的参数，必填 */
+        ajaxData: {is_id:1},
+        /* 异步上传回调函数 */
+        uploadedCallback: function (json) {
+            if (json.code == 0) {
+                console.log(json.obj);
+                $('#avatar_img').attr('src', json.obj.url);
+                avatar = json.obj.image_id; //头像id
+            } else {
+                alert(json.msg);
+            }
+        }
+    });
+    
+});
+</script>
+
+</body>
+</html>
