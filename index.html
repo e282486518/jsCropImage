@@ -33,7 +33,7 @@ $(function () {
         imgField: 'imgbase64',
         /* 异步上传裁切后的图片时附加的参数，必填 */
         ajaxData: {is_id:1},
-        /* 异步上传回调函数 */
+        /* 异步上传回调函数 */ 
         uploadedCallback: function (json) {
             if (json.code == 0) {
                 console.log(json.obj);
