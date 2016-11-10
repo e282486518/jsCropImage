@@ -27,6 +27,9 @@ $(function () {
         enableCrop: true, 
         /* 图片裁切比例，默认1:1 */
         cropRatio: '300:300', 
+        /* 是否异步上传 */
+        isAjax: true,
+        //isAjax: false, 如果不异步那么就直接将base64图片post目标
         /* 异步上传地址 */
         url: "upload.php",
         /* 异步上传接受base64图片的参数,必填 */

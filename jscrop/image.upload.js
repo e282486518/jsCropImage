@@ -66,7 +66,7 @@
                 data["source"] = pic;
                 this.options.data = $.extend(this.options.data,data);
                 
-                this.image.width = pic.naturalWidth;console.log(pic);
+                this.image.width = pic.naturalWidth;//console.log(pic);
                 this.image.height =pic.naturalHeight;
                 
                 this.reseyLayout(pic,$container);
@@ -111,7 +111,7 @@
             } else {
                 $container.append(image);
             }
-            this.options.imgChangeRatio = imageWidth / $(image).width();console.log($(image).width());
+            this.options.imgChangeRatio = imageWidth / $(image).width();//console.log($(image).width());
             // Options.changgedImgRatio=parseFloat(this.pic.width())/parseFloat(this.pic.height());
             //alert(Options.changgedImgRatio);
         },
@@ -313,6 +313,15 @@
             var options = this.options;
             /* 裁切图片,将裁切后的图片转化为base64  */
             var base64 = this.clipImage();
+            /* 不上传，直接返回base64 */
+            if (!self.options.isAjax) { 
+                /* 隐藏裁切框 */
+                self.imageBoxObj.hide();
+                self.imageBoxObj = null;
+                /* 回调 */
+                self.options.uploadedCallback(base64);
+                return;
+            }
             var datas  = {};
             datas[self.options.imgField] = base64;
             /* 附加上传图片参数 */
@@ -329,12 +338,14 @@
                 cache: false,
                 dataType: 'json',
                 success: function(data) {
-                    console.log(data);
+                    //console.log(data);console.log(base64);
+                    /* 隐藏裁切框 */
                     if(self.options.enableCrop) {
                         self.imageBoxObj.hide();
                         self.imageBoxObj = null;
                     } 
-                   self.options.uploadedCallback(data);
+                    /* 回调 */
+                    self.options.uploadedCallback(data);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.error('ERRORS: ' + textStatus);
